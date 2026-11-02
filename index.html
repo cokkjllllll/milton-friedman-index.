@@ -1,133 +1,311 @@
+
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>European Milton Friedman Index</title>
 <style>
-:root {
-  --green:#173d32;
-  --green2:#2d6552;
-  --cream:#f5f3ec;
-  --ink:#202a27;
-  --muted:#68736d;
-  --line:#dedfd7;
-  --gold:#c6a96b;
+:root{
+ --navy:#142b49;--blue:#234b78;--gold:#c5a45b;
+ --paper:#f5f6f8;--white:#fff;--ink:#202b38;
+ --muted:#697586;--line:#e1e5eb;
+ --green:#25834b;--yellow:#e5ad24;--red:#c84646;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,sans-serif}
-header{background:var(--green);color:white;padding:48px 7vw 42px}
-.top{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#d6c18e}
-h1{font-family:Georgia,serif;font-weight:normal;font-size:clamp(34px,5vw,62px);line-height:1.05;max-width:850px;margin:24px 0 15px}
-.subtitle{font-size:17px;color:#e0e8e2;max-width:650px;line-height:1.6}
-main{max-width:1180px;margin:0 auto;padding:42px 24px 80px}
-.intro{display:grid;grid-template-columns:2fr 1fr;gap:30px;margin-bottom:38px}
-h2{font-family:Georgia,serif;font-weight:normal;font-size:29px;margin:0 0 14px}
-p{line-height:1.65;color:var(--muted)}
-.note{background:#e9e8df;padding:22px;border-left:3px solid var(--gold);font-size:14px;line-height:1.6}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:42px 0 18px}
-select{padding:12px 14px;border:1px solid var(--line);background:white;border-radius:3px;font-size:14px}
-.table-wrap{overflow-x:auto;background:white;border:1px solid var(--line)}
-table{width:100%;border-collapse:collapse;min-width:760px}
-th,td{text-align:left;padding:16px 14px;border-bottom:1px solid var(--line);font-size:14px}
-th{background:#eeeee8;color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font-family:Arial,Helvetica,sans-serif}
+header{background:var(--navy);color:white}
+.topbar{max-width:1250px;margin:auto;padding:17px 25px;
+ display:flex;align-items:center;justify-content:space-between;
+ border-bottom:1px solid #ffffff25}
+.brand{font-family:Georgia,serif;font-size:18px;letter-spacing:1px}
+.brand span{color:var(--gold)}
+.nav{font-size:12px;letter-spacing:1px;color:#dce5ef}
+.hero{max-width:1250px;margin:auto;padding:55px 25px 48px}
+.eyebrow{color:var(--gold);font-size:11px;letter-spacing:3px;
+ text-transform:uppercase;font-weight:bold}
+h1{font:normal clamp(36px,5vw,61px)/1.06 Georgia,serif;
+ max-width:850px;margin:18px 0}
+.hero p{max-width:700px;color:#dce5ef;line-height:1.7;font-size:16px}
+main{max-width:1250px;margin:auto;padding:30px 25px 75px}
+.search-panel{background:white;border:1px solid var(--line);
+ padding:23px;margin-top:-2px;box-shadow:0 5px 22px #172b4610}
+.search-grid{display:grid;grid-template-columns:2fr 1fr 1fr;
+ gap:13px;align-items:end}
+label{display:block;font-size:11px;font-weight:bold;
+ color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+input,select{width:100%;padding:14px;border:1px solid #cfd6df;
+ background:white;border-radius:3px;font-size:14px;color:var(--ink)}
+button{border:0;background:var(--navy);color:white;padding:14px 20px;
+ cursor:pointer;font-weight:bold;border-radius:3px}
+button:hover{background:var(--blue)}
+h2{font:normal 29px Georgia,serif;color:var(--navy);margin:0 0 9px}
+.section{margin-top:42px}
+.sub{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 20px}
+.country-title{display:flex;justify-content:space-between;
+ align-items:center;gap:20px;flex-wrap:wrap}
+.country-title h2{font-size:34px}
+.year{font-size:12px;color:var(--muted)}
+.signal-summary{display:grid;grid-template-columns:repeat(3,1fr);
+ gap:12px;margin:20px 0}
+.signal{padding:17px;background:white;border:1px solid var(--line);
+ display:flex;gap:12px;align-items:center}
+.dot{width:17px;height:17px;border-radius:50%;flex:none}
+.green{background:var(--green)}.yellow{background:var(--yellow)}
+.red{background:var(--red)}.grey{background:#aab2bd}
+.signal strong{display:block;font-size:13px}
+.signal small{color:var(--muted);font-size:11px}
+.indicators{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.indicator{background:white;border:1px solid var(--line);
+ padding:18px;min-height:180px;position:relative}
+.indicator .num{font:26px Georgia,serif;color:var(--gold)}
+.indicator h3{font-size:14px;line-height:1.4;min-height:40px}
+.indicator .value{font:24px Georgia,serif;color:var(--navy);margin:15px 0 7px}
+.indicator .status{font-size:11px;font-weight:bold;color:var(--muted)}
+.indicator .dot{display:inline-block;width:10px;height:10px;margin-right:6px}
+.tablebox{overflow-x:auto;background:white;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th{background:#edf0f4;color:var(--navy);font-size:10px;
+ letter-spacing:.8px;text-transform:uppercase;text-align:left}
+th,td{padding:15px 13px;border-bottom:1px solid var(--line);font-size:13px}
 td:first-child{font-weight:bold}
-.status{color:#8a6c32;font-size:12px;font-weight:bold}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:22px 0}
-.card{background:white;border:1px solid var(--line);padding:18px;min-height:145px}
-.number{font-family:Georgia,serif;font-size:30px;color:var(--green);margin-bottom:10px}
-.card p{font-size:13px;margin:0}
-.method{margin-top:55px;border-top:1px solid var(--line);padding-top:30px}
-footer{background:var(--green);color:#dce5df;padding:28px 7vw;font-size:12px;letter-spacing:.4px}
-@media(max-width:750px){
- .intro{grid-template-columns:1fr}
- .cards{grid-template-columns:repeat(2,1fr)}
- .section-head{align-items:start;flex-direction:column}
+tr.selected{background:#f0f4f9}
+.rank{color:var(--muted);font-size:11px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;
+ font-weight:bold;padding:6px 9px;border-radius:20px;background:#eef0f3}
+.pill .dot{width:8px;height:8px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.panel{background:white;border:1px solid var(--line);padding:20px}
+.panel h3{margin:0 0 14px;color:var(--navy);font:21px Georgia,serif}
+.comparebar{height:9px;background:#edf0f4;margin:10px 0 17px;border-radius:10px}
+.comparebar span{display:block;height:100%;background:var(--blue);border-radius:10px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.info{background:white;border:1px solid var(--line);padding:22px}
+.info h3{font:20px Georgia,serif;color:var(--navy)}
+.info p{font-size:13px;line-height:1.7;color:var(--muted)}
+.notice{border-left:4px solid var(--gold);background:#fff;
+ padding:17px 20px;font-size:13px;line-height:1.65;color:#596575}
+footer{background:var(--navy);color:#dce5ef;padding:30px 25px}
+.footer-inner{max-width:1250px;margin:auto;display:flex;
+ justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px}
+a{color:var(--blue)}
+.hidden{display:none!important}
+@media(max-width:850px){
+ .indicators{grid-template-columns:repeat(2,1fr)}
+ .search-grid{grid-template-columns:1fr 1fr}
+ .search-grid>div:first-child{grid-column:1/-1}
+}
+@media(max-width:560px){
+ .indicators{grid-template-columns:1fr 1fr}
+ .signal-summary{grid-template-columns:1fr}
+ .compare,.info-grid{grid-template-columns:1fr}
+ .search-grid{grid-template-columns:1fr}
+ .search-grid>div:first-child{grid-column:auto}
+ main{padding-left:14px;padding-right:14px}
 }
 </style>
 </head>
 <body>
 <header>
-  <div class="top">European Milton Friedman Index</div>
-  <h1>How much does the State weigh on business?</h1>
-  <div class="subtitle">A comparative index of the economic weight of the State across ten European countries.</div>
+ <div class="topbar">
+  <div class="brand">MILTON FRIEDMAN <span>INDEX</span></div>
+  <div class="nav">EUROPEAN RESEARCH PROJECT</div>
+ </div>
+ <div class="hero">
+  <div class="eyebrow">Economic freedom · State weight · Business</div>
+  <h1>European Milton Friedman Index</h1>
+  <p>Comparing the weight of the State and the conditions for doing business across ten European economies.</p>
+ </div>
 </header>
 
 <main>
-  <section class="intro">
-    <div>
-      <h2>Measuring the weight of the State</h2>
-      <p>The European Milton Friedman Index compares ten European economies through five indicators: business taxation, public expenditure, public employment, personnel costs and product market regulation.</p>
-      <p>The aim is to provide a clear, evidence-based comparison of the conditions under which businesses operate across Europe.</p>
-    </div>
-    <div class="note">
-      <strong>Research status</strong><br>
-      The framework is established. Data collection and source verification are in progress. No country ranking or final score is published until the indicators are complete and comparable.
-    </div>
-  </section>
+ <section class="search-panel">
+  <div class="search-grid">
+   <div>
+    <label for="search">Search a country or city</label>
+    <input id="search" list="places" placeholder="Enter a country or city..." oninput="searchPlace()">
+    <datalist id="places"></datalist>
+   </div>
+   <div>
+    <label for="country">Select country</label>
+    <select id="country" onchange="selectCountry(this.value)"></select>
+   </div>
+   <div>
+    <label for="compareCountry">Compare with</label>
+    <select id="compareCountry" onchange="renderCompare()"></select>
+   </div>
+  </div>
+ </section>
 
-  <h2>The five indicators</h2>
-  <section class="cards">
-    <div class="card"><div class="number">01</div><strong>Business taxation</strong><p>Tax burden on companies.</p></div>
-    <div class="card"><div class="number">02</div><strong>Public expenditure</strong><p>General government spending as a share of GDP.</p></div>
-    <div class="card"><div class="number">03</div><strong>Public employment</strong><p>Share of workers employed by government.</p></div>
-    <div class="card"><div class="number">04</div><strong>Personnel costs</strong><p>Government compensation as a share of GDP.</p></div>
-    <div class="card"><div class="number">05</div><strong>Market regulation</strong><p>OECD Product Market Regulation indicators.</p></div>
-  </section>
+ <section class="section">
+  <div class="country-title">
+   <div>
+    <div class="eyebrow">Country profile</div>
+    <h2 id="countryName">Italy</h2>
+    <div class="year">European country comparison · Data collection in progress</div>
+   </div>
+   <span class="pill"><span class="dot grey"></span>Research in progress</span>
+  </div>
+  <div class="signal-summary">
+   <div class="signal"><span class="dot grey"></span><div><strong>Overall index</strong><small id="overall">Not yet calculated</small></div></div>
+   <div class="signal"><span class="dot grey"></span><div><strong>Data coverage</strong><small id="coverage">0 of 5 indicators verified</small></div></div>
+   <div class="signal"><span class="dot grey"></span><div><strong>Reference period</strong><small>To be confirmed</small></div></div>
+  </div>
+ </section>
 
-  <section>
-    <div class="section-head">
-      <div>
-        <h2>Country comparison</h2>
-        <p>Ten European countries included in the study.</p>
-      </div>
-      <select id="indicator" onchange="showIndicator()">
-        <option value="all">All indicators</option>
-        <option value="tax">Business taxation</option>
-        <option value="spending">Public expenditure</option>
-        <option value="employment">Public employment</option>
-        <option value="personnel">Personnel costs</option>
-        <option value="regulation">Product market regulation</option>
-      </select>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Country</th><th>Tax</th><th>Public spending</th><th>Public employment</th><th>Personnel costs</th><th>Regulation</th></tr></thead>
-        <tbody id="countries"></tbody>
-      </table>
-    </div>
-  </section>
+ <section class="section">
+  <h2>Five indicators</h2>
+  <p class="sub">Each indicator will display its value, reference year, source and traffic-light classification.</p>
+  <div class="indicators" id="indicatorCards"></div>
+ </section>
 
-  <section class="method">
-    <h2>Methodology</h2>
-    <p>The index uses five indicators drawn from internationally comparable statistical sources, including Eurostat, the OECD and national statistical authorities. Each indicator will be accompanied by its reference year, definition and source.</p>
-    <p>Green, yellow and red classifications will be assigned only after the data have been verified and the calculation method has been published. The indicators measure different dimensions of the State's role and will not be treated as interchangeable.</p>
-  </section>
+ <section class="section">
+  <h2>European country ranking</h2>
+  <p class="sub">The ranking will be calculated after comparable data have been verified for all ten countries.</p>
+  <div class="tablebox">
+   <table>
+    <thead><tr><th>Country</th><th>Tax</th><th>Spending</th><th>Employment</th><th>Personnel</th><th>Regulation</th><th>Overall</th></tr></thead>
+    <tbody id="ranking"></tbody>
+   </table>
+  </div>
+ </section>
+
+ <section class="section">
+  <h2>Country comparison</h2>
+  <p class="sub">Select two countries above to compare their indicators side by side.</p>
+  <div class="compare" id="compare"></div>
+ </section>
+
+ <section class="section">
+  <h2>Methodology and sources</h2>
+  <div class="info-grid">
+   <div class="info">
+    <h3>How the index works</h3>
+    <p>The index compares five dimensions: business taxation, public expenditure as a share of GDP, public employment, government personnel costs as a share of GDP, and OECD Product Market Regulation.</p>
+    <p>Each indicator will be normalised before aggregation. The methodology will specify the direction of each measure, weighting, reference year and treatment of missing data.</p>
+   </div>
+   <div class="info">
+    <h3>Traffic-light system</h3>
+    <p><span class="pill"><span class="dot green"></span>Green</span> Lower measured State burden.</p>
+    <p><span class="pill"><span class="dot yellow"></span>Yellow</span> Intermediate measured burden.</p>
+    <p><span class="pill"><span class="dot red"></span>Red</span> Higher measured burden.</p>
+    <p>Grey means data are not yet verified. No colour is assigned in advance.</p>
+   </div>
+   <div class="info">
+    <h3>Sources</h3>
+    <p>Eurostat · OECD · European Commission · National statistical authorities.</p>
+    <p>Every published value will link to its original source and identify the reference year.</p>
+   </div>
+   <div class="info">
+    <h3>Important distinction</h3>
+    <p>Public spending and public employment measure the size of government. They do not, by themselves, measure regulatory restrictions, public-service quality or economic outcomes.</p>
+   </div>
+  </div>
+  <div class="notice" style="margin-top:16px">
+   <strong>Data integrity:</strong> This is a research framework, not a completed ranking. No country score or traffic-light result is published until the underlying figures and calculation rules have been checked.
+  </div>
+ </section>
 </main>
 
 <footer>
-  EUROPEAN MILTON FRIEDMAN INDEX · INDEPENDENT RESEARCH PROJECT
+ <div class="footer-inner">
+  <div>EUROPEAN MILTON FRIEDMAN INDEX</div>
+  <div>Independent comparative research · Sources to be documented</div>
+ </div>
 </footer>
 
 <script>
-const countries = [
+const names=[
 "Italy","Germany","France","Spain","Netherlands",
 "Sweden","Denmark","Poland","Czech Republic","Ireland"
 ];
-const tbody = document.getElementById("countries");
-function showIndicator(){
-  const selected = document.getElementById("indicator").value;
-  const columns = ["tax","spending","employment","personnel","regulation"];
-  const labels = ["Tax","Public spending","Public employment","Personnel costs","Regulation"];
-  tbody.innerHTML = countries.map(country => {
-    let cells = columns.map((col,i) =>
-      `<td class="${selected==='all'||selected===col?'':'hidden'}"><span class="status">Data pending</span></td>`
-    ).join("");
-    return `<tr><td>${country}</td>${cells}</tr>`;
-  }).join("");
-  document.querySelectorAll("td.hidden").forEach(el=>el.style.display="none");
+const indicators=[
+["Business taxation","Corporate tax burden"],
+["Public expenditure","General government expenditure / GDP"],
+["Public employment","Public employment share"],
+["Personnel costs","Government compensation / GDP"],
+["Product market regulation","OECD PMR indicator"]
+];
+// Empty values are intentional until verified data are entered.
+const data={};
+names.forEach(n=>{
+ data[n]=indicators.map(x=>({value:null,year:null,source:"",status:"pending"}));
+});
+const country=document.getElementById("country");
+const compareCountry=document.getElementById("compareCountry");
+names.forEach(n=>{
+ country.add(new Option(n,n));
+ compareCountry.add(new Option(n,n));
+});
+compareCountry.value="Germany";
+document.getElementById("places").innerHTML=
+ names.map(n=>`<option value="${n}">`).join("");
+
+function selectCountry(n){
+ if(!data[n])return;
+ country.value=n;
+ document.getElementById("countryName").textContent=n;
+ document.getElementById("search").value=n;
+ renderCards();renderRanking();renderCompare();
 }
-showIndicator();
+function light(item){
+ if(item.status!=="verified"||item.value===null)return "grey";
+ if(item.level==="green")return "green";
+ if(item.level==="yellow")return "yellow";
+ if(item.level==="red")return "red";
+ return "grey";
+}
+function renderCards(){
+ const n=country.value;
+ const items=data[n];
+ const verified=items.filter(x=>x.status==="verified"&&x.value!==null).length;
+ document.getElementById("coverage").textContent=verified+" of 5 indicators verified";
+ document.getElementById("overall").textContent=verified===5?"Calculation required":"Not yet calculated";
+ document.getElementById("indicatorCards").innerHTML=indicators.map((ind,i)=>{
+  const x=items[i],c=light(x);
+  return `<article class="indicator">
+   <div class="num">0${i+1}</div>
+   <h3>${ind[0]}</h3>
+   <div class="value">${x.value===null?"—":x.value}</div>
+   <div class="status"><span class="dot ${c}"></span>${x.status==="verified"?x.level||"Verified":"DATA PENDING"}</div>
+   <p class="sub">${x.year?"Reference year: "+x.year:"Reference year pending"}</p>
+   ${x.source?`<a href="${x.source}" target="_blank">View source</a>`:""}
+  </article>`;
+ }).join("");
+}
+function renderRanking(){
+ document.getElementById("ranking").innerHTML=names.map(n=>{
+  const items=data[n];
+  const cells=items.map(x=>`<td><span class="pill"><span class="dot ${light(x)}"></span>${x.value===null?"Pending":x.value}</span></td>`).join("");
+  return `<tr class="${n===country.value?"selected":""}">
+   <td><span class="rank">—</span> ${n}</td>${cells}
+   <td><span class="pill"><span class="dot grey"></span>Pending</span></td>
+  </tr>`;
+ }).join("");
+}
+function renderCompare(){
+ const a=country.value,b=compareCountry.value;
+ document.getElementById("compare").innerHTML=[a,b].map(n=>{
+  return `<div class="panel"><h3>${n}</h3>`+
+  indicators.map((ind,i)=>{
+   const x=data[n][i];
+   return `<p><strong>${ind[0]}</strong><br>
+   ${x.value===null?"Data pending":x.value}
+   <div class="comparebar"><span style="width:0%"></span></div></p>`;
+  }).join("")+`</div>`;
+ }).join("");
+}
+function searchPlace(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const match=names.find(n=>n.toLowerCase()===q);
+ if(match)selectCountry(match);
+}
+country.addEventListener("change",()=>selectCountry(country.value));
+function initialise(){
+ selectCountry("Italy");
+}
+initialise();
 </script>
 </body>
 </html>
