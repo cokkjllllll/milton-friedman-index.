@@ -1,218 +1,87 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>European Milton Friedman Index</title>
-<style>
-:root{
- --navy:#10243b;--blue:#193b5b;--gold:#c5a45b;
- --paper:#f5f6f7;--white:#fff;--ink:#172536;
- --muted:#687789;--line:#dce2e8;
- --green:#238653;--yellow:#d7a52c;--red:#bd4545;--grey:#8994a0;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);
- font-family:Arial,Helvetica,sans-serif}
-header{background:var(--navy);color:white;padding:34px max(5%,calc((100% - 1180px)/2)) 28px;
- border-bottom:5px solid var(--gold)}
-.brand{font-size:12px;letter-spacing:3px;color:#d5bd83;font-weight:bold}
-h1{font-family:Georgia,serif;font-size:clamp(27px,4vw,43px);
- font-weight:normal;margin:14px 0 8px;letter-spacing:.4px}
-.subtitle{color:#d5dce5;font-size:14px;line-height:1.6}
-main{max-width:1180px;margin:30px auto;padding:0 20px}
-.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
-input,select{padding:13px 15px;border:1px solid var(--line);
- background:white;border-radius:3px;font-size:14px;color:var(--ink)}
-input{flex:1;min-width:220px}
-select{min-width:190px}
-.panel{background:white;border:1px solid var(--line);padding:22px;
- margin-bottom:20px;box-shadow:0 2px 8px #10243b0a}
-h2{font-family:Georgia,serif;font-size:23px;font-weight:normal;
- color:var(--navy);margin:0 0 17px}
-h3{font-size:15px;color:var(--navy);margin:0 0 12px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--navy);color:white;text-align:left;padding:13px 10px;
- font-size:11px;letter-spacing:.5px;text-transform:uppercase}
-td{padding:13px 10px;border-bottom:1px solid var(--line)}
-tr:hover td{background:#f8f9fa}
-.country{font-weight:bold;color:var(--navy)}
-.status{display:inline-block;width:10px;height:10px;border-radius:50%;
- margin-right:7px;background:var(--grey)}
-.status.green{background:var(--green)}
-.status.yellow{background:var(--yellow)}
-.status.red{background:var(--red)}
-.status.grey{background:var(--grey)}
-.score{font-weight:bold;color:var(--navy)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
-.metric{border:1px solid var(--line);padding:16px;background:#fff}
-.metric .name{font-size:11px;text-transform:uppercase;letter-spacing:.7px;
- color:var(--muted);min-height:28px}
-.metric .value{font-family:Georgia,serif;font-size:26px;color:var(--navy);margin:10px 0}
-.metric small{color:var(--muted);font-size:11px}
-button{background:var(--navy);color:white;border:0;padding:12px 18px;
- cursor:pointer;border-radius:2px;font-weight:bold}
-button:hover{background:var(--blue)}
-.goldline{height:2px;background:var(--gold);width:54px;margin:0 0 18px}
-.note{font-size:12px;color:var(--muted);line-height:1.6}
-.country-head{display:flex;justify-content:space-between;gap:12px;align-items:center;
- flex-wrap:wrap}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted)}
-footer{background:var(--navy);color:#d5dce5;padding:25px 5%;
- margin-top:40px;font-size:12px;line-height:1.7}
-a{color:var(--blue)}
-.hidden{display:none}
-@media(max-width:700px){
- main{padding:0 10px}.panel{padding:14px;overflow-x:auto}
- table{min-width:750px}header{padding:26px 20px}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semaforo Fiscale Europeo</title>
+    <!-- Tailwind CSS Engine -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        /* Stili per mantenere la consistenza visiva dei blocchi */
+        .indicator-card { @apply bg-slate-900/40 border border-slate-800 rounded-xl p-4 flex justify-between items-start gap-4 hover:border-slate-700/50 transition; }
+        .country-card { @apply bg-slate-900/60 border border-slate-800 rounded-xl p-5 space-y-3; }
+    </style>
 </head>
-<body>
-<header>
- <div class="brand">MILTON FRIEDMAN INSTITUTE</div>
- <h1>EUROPEAN MILTON FRIEDMAN INDEX</h1>
- <div class="subtitle">Measuring the size of the state, business taxation and market regulation across Europe.</div>
-</header>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
 
-<main>
- <div class="toolbar">
-  <input id="search" type="search" placeholder="Search a country or city..." oninput="filterCountries()">
-  <select id="countrySelect" onchange="showCountry()">
-   <option value="">Select a country</option>
-  </select>
-  <select id="compareSelect" onchange="compareCountries()">
-   <option value="">Compare with another country</option>
-  </select>
- </div>
+    <!-- Header / Navigazione -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🇪🇺</span>
+                <h1 class="text-xl font-black tracking-wider uppercase text-emerald-400">Semaforo Fiscale Europeo</h1>
+            </div>
+            <!-- Cerca Città o Paese -->
+            <div class="relative w-full sm:w-64">
+                <input id="search" type="text" list="places" placeholder="Cerca città o paese..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-emerald-500 text-slate-200">
+                <datalist id="places"><!-- Popolato via JS --></datalist>
+            </div>
+        </div>
+    </header>
 
- <section class="panel">
-  <h2>European country ranking</h2>
-  <div class="goldline"></div>
-  <p class="note">The ranking will be calculated from comparable, verified observations. No overall score is assigned until all five indicators are available on a consistent basis.</p>
-  <table>
-   <thead><tr><th>Country</th><th>Business tax</th><th>Public expenditure</th><th>Public employment</th><th>Personnel costs</th><th>OECD PMR</th></tr></thead>
-   <tbody id="ranking"></tbody>
-  </table>
-  <p class="note">Indicator status: green = comparatively lower burden; yellow = intermediate; red = comparatively higher burden. Grey = not yet calculated. No country is ranked on incomplete data.</p>
- </section>
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- COLONNA SINISTRA: Focus Indicatori -->
+        <section class="lg:col-span-2 space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Profilo Nazionale</span>
+                        <h2 id="countryName" class="text-3xl font-black mt-1">Italy</h2>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label class="text-xs text-slate-400 font-bold uppercase">Cambia Paese:</label>
+                        <select id="country" class="bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-sm font-semibold text-slate-200 focus:outline-none focus:border-emerald-500"></select>
+                    </div>
+                </div>
 
- <section class="panel">
-  <div class="country-head">
-   <h2 id="countryTitle">Country profile</h2>
-   <span class="note" id="yearLabel">Corporate tax reference: 2025</span>
-  </div>
-  <div class="goldline"></div>
-  <div class="grid" id="metrics"></div>
-  <p class="note" id="profileNote">Select a country to view its indicators and sources.</p>
- </section>
+                <!-- Lista degli Indicatori Popolata da JS -->
+                <div id="indicators" class="space-y-4"></div>
+            </div>
 
- <section class="panel">
-  <h2>Country comparison</h2>
-  <div class="goldline"></div>
-  <div id="comparison" class="note">Select a country and a comparison country above.</div>
- </section>
+            <!-- Pannello di Confronto Diretto -->
+            <div class="bg-gradient-to-br from-slate-800/60 to-slate-900/40 border border-slate-700/50 rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-bold text-emerald-400 flex items-center gap-2">📊 Confronto Bilaterale</h3>
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs text-slate-400 font-bold uppercase">Contro:</label>
+                        <select id="against" class="bg-slate-900 border border-slate-700 rounded-lg p-1 text-xs font-semibold text-slate-200"></select>
+                    </div>
+                </div>
+                <div id="comparison" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Generato Dinamicamente da JS -->
+                </div>
+            </div>
+        </section>
 
- <section class="panel">
-  <h2>Methodology and sources</h2>
-  <div class="goldline"></div>
-  <h3>Five indicators</h3>
-  <ol class="note">
-   <li><b>Business taxation:</b> combined statutory corporate income tax rate, including central and sub-central rates.</li>
-   <li><b>Public expenditure:</b> general government total expenditure as a percentage of GDP.</li>
-   <li><b>Public employment:</b> general government employment as a share of total employment.</li>
-   <li><b>Public personnel costs:</b> general government compensation of employees as a percentage of GDP.</li>
-   <li><b>Product Market Regulation:</b> OECD PMR indicator, measuring regulatory barriers to competition.</li>
-  </ol>
-  <h3>Data sources</h3>
-  <ul class="note">
-   <li><a href="https://www.oecd.org/en/topics/sub-issues/corporate-tax-statistics.html" target="_blank">OECD – Corporate Tax Statistics</a></li>
-   <li><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_main/default/table" target="_blank">Eurostat – Government expenditure and personnel costs</a></li>
-   <li><a href="https://www.oecd.org/en/data/indicators/public-employment.html" target="_blank">OECD – Public employment</a></li>
-   <li><a href="https://www.oecd.org/en/topics/product-market-regulation.html" target="_blank">OECD – Product Market Regulation</a></li>
-  </ul>
-  <p class="note">The indicators measure different dimensions of the state's economic footprint. Public expenditure and public employment do not, by themselves, measure the quality of public services. Years and definitions must be checked before calculating a composite score.</p>
- </section>
-</main>
+        <!-- COLONNA DESTRA: Stato del Database / Classifiche -->
+        <section class="space-y-6">
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6 backdrop-blur">
+                <div class="flex justify-between items-center mb-1">
+                    <h3 class="text-lg font-bold">📋 Database Europeo</h3>
+                    <span id="coverage" class="px-2 py-0.5 text-xs font-bold rounded bg-slate-900 border border-slate-700 text-slate-400">0 / 5</span>
+                </div>
+                <p class="text-xs text-slate-400 mb-6">Copertura attuale degli indicatori verificati</p>
+                
+                <!-- Lista Nazioni e Copertura -->
+                <div id="ranking" class="space-y-3"></div>
+            </div>
+        </section>
 
-<footer>
- <b>EUROPEAN MILTON FRIEDMAN INDEX</b><br>
- An independent comparative project on taxation, public expenditure, public employment and market regulation.<br>
- Sources: OECD · Eurostat
-</footer>
+    </main>
 
-<script>
-const countries = [
- {name:"Italy",tax:27.81},
- {name:"Germany",tax:29.9},
- {name:"France",tax:25.8},
- {name:"Spain",tax:25.0},
- {name:"Netherlands",tax:25.8},
- {name:"Sweden",tax:20.6},
- {name:"Denmark",tax:22.0},
- {name:"Poland",tax:19.0},
- {name:"Czech Republic",tax:21.0},
- {name:"Ireland",tax:12.5}
-];
-
-const indicators = [
- ["Business taxation","% corporate tax"],
- ["Public expenditure","% GDP"],
- ["Public employment","% total employment"],
- ["Public personnel costs","% GDP"],
- ["OECD Product Market Regulation","OECD index"]
-];
-
-const ranking=document.getElementById("ranking");
-const select=document.getElementById("countrySelect");
-const compare=document.getElementById("compareSelect");
-
-countries.forEach((c,i)=>{
- const a=document.createElement("option");a.value=c.name;a.textContent=c.name;select.appendChild(a);
- const b=document.createElement("option");b.value=c.name;b.textContent=c.name;compare.appendChild(b);
- const tr=document.createElement("tr");
- tr.innerHTML=`<td class="country">${c.name}</td>
- <td><span class="status grey"></span>${c.tax.toFixed(1)}%</td>
- <td><span class="status grey"></span>—</td>
- <td><span class="status grey"></span>—</td>
- <td><span class="status grey"></span>—</td>
- <td><span class="status grey"></span>—</td>`;
- ranking.appendChild(tr);
-});
-
-function filterCountries(){
- const q=document.getElementById("search").value.toLowerCase();
- [...ranking.rows].forEach((r,i)=>{
-  r.style.display=countries[i].name.toLowerCase().includes(q)?"":"none";
- });
-}
-function showCountry(){
- const name=select.value;
- const c=countries.find(x=>x.name===name);
- if(!c)return;
- document.getElementById("countryTitle").textContent=name;
- document.getElementById("metrics").innerHTML=`
- <div class="metric"><div class="name">Business taxation</div><div class="value">${c.tax.toFixed(1)}%</div><small>Combined statutory rate · 2025</small></div>
- <div class="metric"><div class="name">Public expenditure</div><div class="value">—</div><small>Eurostat · % GDP</small></div>
- <div class="metric"><div class="name">Public employment</div><div class="value">—</div><small>OECD · % employment</small></div>
- <div class="metric"><div class="name">Personnel costs</div><div class="value">—</div><small>Eurostat · % GDP</small></div>
- <div class="metric"><div class="name">Product Market Regulation</div><div class="value">—</div><small>OECD PMR index</small></div>`;
- document.getElementById("profileNote").textContent=
- "Only the corporate tax rate is populated in this version. The remaining indicators require verified, comparable observations.";
-}
-function compareCountries(){
- const a=countries.find(x=>x.name===select.value);
- const b=countries.find(x=>x.name===compare.value);
- const out=document.getElementById("comparison");
- if(!a||!b){out.textContent="Select two countries to compare.";return;}
- out.innerHTML=`<table><thead><tr><th>Indicator</th><th>${a.name}</th><th>${b.name}</th></tr></thead>
- <tbody><tr><td>Corporate tax rate (2025)</td><td>${a.tax.toFixed(1)}%</td><td>${b.tax.toFixed(1)}%</td></tr>
- <tr><td>Public expenditure / GDP</td><td>Not yet populated</td><td>Not yet populated</td></tr>
- <tr><td>Public employment</td><td>Not yet populated</td><td>Not yet populated</td></tr>
- <tr><td>Personnel costs / GDP</td><td>Not yet populated</td><td>Not yet populated</td></tr>
- <tr><td>OECD PMR</td><td>Not yet populated</td><td>Not yet populated</td></tr></tbody></table>`;
-}
-</script>
+    <!-- Script Logico (Il tuo codice integrato) -->
+    <script src="app.js"></script>
 </body>
 </html>
